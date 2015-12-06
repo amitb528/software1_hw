@@ -1,6 +1,8 @@
 package il.ac.tau.cs.sw1.ex5;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -63,16 +65,16 @@ public class User {
     public static User[] loadUsersData(String fileName) throws Exception{
         User[] users = new User[MAX_USERS_IN_FILE];
 
-        Scanner scanner = new Scanner(new File(fileName));
-        scanner.nextLine();
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        reader.readLine();
 
         int count = 0;
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            String[] values = line.split(";");
+        String line;
+        while((line = reader.readLine()) != null){
+            String[] values = line.replace("\"", "").split(";");
 
-            int userID = Integer.parseInt(values[0].replace("\"", ""));
-            String location = values[1].replace("\"", "");
+            int userID = Integer.parseInt(values[0]);
+            String location = values[1];
             if(values[2].equals("NULL")){
                 users[count] = new User(userID, location);
             }else{
@@ -83,7 +85,7 @@ public class User {
             count++;
         }
 
-        scanner.close();
+        reader.close();
 
         return Arrays.copyOf(users, count);
     }

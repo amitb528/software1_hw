@@ -1,6 +1,8 @@
 package il.ac.tau.cs.sw1.ex5;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -62,19 +64,19 @@ public class Book {
     public static Book[] loadBooksData(String fileName) throws Exception{
         Book[] books = new Book[MAX_BOOK_IN_FILE];
 
-        Scanner scanner = new Scanner(new File(fileName));
-        scanner.nextLine();
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        reader.readLine();
 
         int count = 0;
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
+        String line;
+        while((line = reader.readLine()) != null){
             String[] values = line.replace("\"","").split(";");
 
             books[count] = new Book(values[0], values[1], values[2], values[3], values[4]);
             count++;
         }
 
-        scanner.close();
+        reader.close();
 
         return Arrays.copyOf(books, count);
     }
