@@ -5,7 +5,15 @@ import java.util.Set;
 /**
  * Created by Amit on 1/6/2016.
  */
-public abstract class AbstractSpaceship implements Spaceship{
+public abstract class AbstractSpaceship implements Spaceship {
+
+    private static final String FORMAT = "%s\n" +
+            "\tName=%s\n" +
+            "\tCommissionYear=%s\n" +
+            "\tMaximalSpeed=%s\n" +
+            "\tFirePower=%s\n" +
+            "\tCrewMembers=%s\n" +
+            "\tAnnualMaintenanceCost=%s";
 
     String name;
     int commissionYear;
@@ -13,7 +21,7 @@ public abstract class AbstractSpaceship implements Spaceship{
     Set<CrewMember> crewMembers;
 
     public AbstractSpaceship(String name, int commissionYear, float maximalSpeed,
-                             Set<CrewMember> crewMembers){
+                             Set<CrewMember> crewMembers) {
         this.name = name;
         this.commissionYear = commissionYear;
         this.maximalSpeed = maximalSpeed;
@@ -43,5 +51,11 @@ public abstract class AbstractSpaceship implements Spaceship{
     @Override
     public Set<CrewMember> getCrewMembers() {
         return crewMembers;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(FORMAT, getClass().getSimpleName(), name, commissionYear, maximalSpeed, getFirePower(),
+                crewMembers.size(), getAnnualMaintenanceCost());
     }
 }
